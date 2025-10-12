@@ -60,4 +60,22 @@ Query parameters are **optional** and can be customized to refine results.
 ```http
 GET /titles/tt1234567?info=base_info
 
+## 🔐 Authentication  
+
+To access the **MoviesDatabase API**, all requests must be authenticated using an **API key**.  
+This key ensures that only authorized users can interact with the API and helps monitor usage for rate limiting and security purposes.
+
+### 🔹 How to Authenticate  
+
+Each request must include the API key in the **headers** section.  
+Without this key, your request will return an **authentication error (HTTP 401 Unauthorized)**.
+
+#### Example Header:
+```http
+GET /titles/tt1234567 HTTP/1.1
+Host: moviesdatabase.example.com
+X-API-KEY: your_api_key_here
+Accept: application/json
+
+
 
