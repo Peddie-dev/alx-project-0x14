@@ -46,3 +46,18 @@ Below are the main endpoints provided by the **MoviesDatabase API**, along with 
 
 Each endpoint returns a JSON object containing a `results` key and may include pagination fields like `page`, `next`, and `entries` where applicable.
 
+## 📦 Request and Response Format  
+
+This section explains the structure of a typical request and its corresponding response when interacting with the **MoviesDatabase API**.
+
+### 🔹 Request Format  
+
+All endpoints are accessible via HTTPS and return JSON data.  
+Query parameters are **optional** and can be customized to refine results.
+
+#### Example Request  
+**Get Movie Details by IMDb ID**
+```http
+GET /titles/tt1234567?info=base_info
+
+
