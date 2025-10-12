@@ -1,5 +1,16 @@
 ## 🧩 API Overview  
 
-This API offers a comprehensive collection of information about **movies**, **TV shows**, and **actors**. It includes valuable details such as YouTube trailer URLs, awards, full biographies, and much more.  
+Collection of information for **movies**, **TV shows**, and **actors**.  
+Includes YouTube trailer URLs, awards, full biographies, and many other useful details.  
 
-With data on over **9 million titles** (including movies, series, and episodes) and **11 million cast and crew members**, this API ensures access to rich, up-to-date entertainment data. It’s an excellent resource for developers looking to build apps or platforms that rely on detailed and accurate film industry information.
+This API provides **complete and updated data** for over **9 million titles** (movies, series, and episodes) and **11 million actors, crew, and cast members**. It is an excellent resource for developers building applications that rely on accurate and detailed entertainment information.  
+
+👉 **Support the developer:** [Buy Me a Coffee](https://www.buymeacoffee.com/SAdrian13)  
+
+---
+
+## 🔖 Version  
+
+**MoviesDatabase API Version:** `v1`  
+
+This version provides complete and updated data for over 9 million titles and 11 million actors, with new titles updated **weekly** and ratings/episodes updated **daily**.
