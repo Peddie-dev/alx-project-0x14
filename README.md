@@ -59,4 +59,109 @@ Query parameters are **optional** and can be customized to refine results.
 **Get Movie Details by IMDb ID**
 ```http
 GET /titles/tt1234567?info=base_info
+```
+
+## 🔐 Authentication  
+
+To access the **MoviesDatabase API**, all requests must be authenticated using an **API key**.  
+This key ensures that only authorized users can interact with the API and helps monitor usage for rate limiting and security purposes.
+
+### 🔹 How to Authenticate  
+
+Each request must include the API key in the **headers** section.  
+Without this key, your request will return an **authentication error (HTTP 401 Unauthorized)**.
+
+#### Example Header:
+```http
+GET /titles/tt1234567 HTTP/1.1
+Host: moviesdatabase.example.com
+X-API-KEY: your_api_key_here
+Accept: application/json
+```
+
+## ⚠️ Error Handling  
+
+The **MoviesDatabase API** provides clear and consistent error responses to help developers identify and resolve issues quickly.  
+Errors are returned in standard **JSON format**, along with an appropriate HTTP status code.
+
+---
+
+### 🔹 Common Error Responses  
+
+| Status Code | Error Type | Description | Possible Fix |
+|--------------|-------------|-------------|---------------|
+| **400 Bad Request** | Invalid Request | The request syntax or parameters are incorrect. | Check query parameters and request format. |
+| **401 Unauthorized** | Authentication Error | Missing or invalid API key. | Include a valid API key in the request headers. |
+| **403 Forbidden** | Permission Denied | The API key doesn’t have access to this resource. | Verify API key permissions or request access. |
+| **404 Not Found** | Resource Missing | The requested resource (title, actor, etc.) was not found. | Ensure the IMDb ID or endpoint path is correct. |
+| **429 Too Many Requests** | Rate Limit Exceeded | Too many requests were made in a short time. | Wait before making more requests or upgrade your plan. |
+| **500 Internal Server Error** | Server Error | An unexpected error occurred on the API server. | Retry the request later or contact support. |
+
+---
+
+### 🔹 Example Error Response  
+
+When an error occurs, the API returns a JSON response similar to this:
+
+```json
+{
+  "status": "error",
+  "statusCode": 404,
+  "message": "Title not found for the given IMDb ID."
+}
+```
+
+## 📈 Usage Limits and Best Practices  
+
+The **MoviesDatabase API** enforces certain usage limits to ensure fair access for all developers and to maintain server performance.  
+Understanding these limits and following best practices will help you use the API efficiently and avoid request restrictions.
+
+---
+
+### 🔹 Usage Limits  
+
+| Limit Type | Description | Recommendation |
+|-------------|-------------|----------------|
+| **Rate Limit** | Maximum of **100 requests per minute** per API key. | Use request batching or caching to minimize repetitive calls. |
+| **Concurrent Requests** | Up to **5 simultaneous requests** allowed per user. | Queue requests when working with large datasets. |
+| **Data Size Limit** | Maximum response size of **1 MB per request**. | Use pagination (`limit` and `page` parameters) for large queries. |
+| **API Key Quota** | Each free-tier key supports up to **10,000 requests per day**. | Upgrade your plan for higher daily limits if necessary. |
+
+---
+
+### 🔹 Best Practices for Efficient API Use  
+
+- ⚡ **Use Pagination:** Always include `limit` and `page` parameters to reduce load and avoid hitting rate limits.  
+- 🗂️ **Cache Responses:** Cache frequently accessed data (e.g., popular titles) to minimize repeated requests.  
+- 🕒 **Implement Rate Limit Handling:** Detect `429 Too Many Requests` responses and delay subsequent calls accordingly.  
+- 🔒 **Secure Your API Key:** Never expose your API key in public repositories or client-side code. Use environment variables.  
+- 📄 **Filter Results:** Use optional query parameters (e.g., `genre`, `year`, `titleType`) to fetch only the data you need.  
+- 🧩 **Handle Errors Gracefully:** Implement error handling for unexpected API or network issues to maintain a smooth user experience.  
+- 🔁 **Automate Updates:** For frequently changing data like ratings or new releases, schedule periodic API syncs instead of manual refreshes.  
+
+---
+
+### 🔹 Example Rate Limit Handling in Code  
+
+```javascript
+async function fetchMovieData(url, headers) {
+  try {
+    const response = await fetch(url, { headers });
+
+    if (response.status === 429) {
+      console.warn("Rate limit exceeded. Retrying after delay...");
+      await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 1 minute
+      return fetchMovieData(url, headers); // Retry
+    }
+
+    if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    return await response.json();
+  } catch (error) {
+    console.error("API request failed:", error.message);
+  }
+}
+```
+
+
 
